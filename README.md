@@ -1,4 +1,4 @@
-# The Ldap Package
+# The Ldap Package [![Build Status](https://travis-ci.org/joomla-framework/ldap.png?branch=master)](https://travis-ci.org/joomla-framework/ldap)
 
 
 ## Installation via Composer
