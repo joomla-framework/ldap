@@ -3,12 +3,12 @@
 
 ## Installation via Composer
 
-Add `"joomla/ldap": "~1.0"` to the require block in your composer.json and then run `composer install`.
+Add `"joomla/ldap": "2.0.*@dev"` to the require block in your composer.json and then run `composer install`.
 
 ```json
 {
 	"require": {
-		"joomla/ldap": "~1.0"
+		"joomla/ldap": "2.0.*@dev"
 	}
 }
 ```
@@ -16,5 +16,5 @@ Add `"joomla/ldap": "~1.0"` to the require block in your composer.json and then 
 Alternatively, you can simply run the following from the command line:
 
 ```sh
-composer require joomla/ldap "~1.0"
+composer require joomla/ldap "2.0.*@dev"
 ```
