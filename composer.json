@@ -18,5 +18,10 @@
             "Joomla\\Ldap\\Tests\\": "Tests/"
         }
     },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    },
     "minimum-stability": "beta"
 }
