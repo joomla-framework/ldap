@@ -14,7 +14,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Joomla\\Ldap\\": "src/",
+            "Joomla\\Ldap\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Joomla\\Ldap\\Tests\\": "Tests/"
         }
     },
