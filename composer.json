@@ -6,7 +6,8 @@
     "homepage": "https://github.com/joomla-framework/ldap",
     "license": "GPL-2.0+",
     "require": {
-        "php": ">=5.3.10|>=7.0"
+        "php": "^5.3.10|~7.0",
+        "ext-ldap": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.8|~5.0",
