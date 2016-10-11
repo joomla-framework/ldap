@@ -2,6 +2,11 @@ language: php
 
 sudo: false
 
+addons:
+  apt_packages:
+    - ldap-utils
+    - slapd
+
 env:
   global:
     - RUN_PHPCS="no"
@@ -24,6 +29,7 @@ matrix:
     - php: hhvm
 
 before_script:
+  - phpenv config-add .travis/phpenv/ldap.ini
   - composer self-update
   - composer update $COMPOSER_FLAGS
 
