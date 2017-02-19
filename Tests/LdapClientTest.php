@@ -7,13 +7,14 @@
 namespace Joomla\Ldap\Tests;
 
 use Joomla\Ldap\LdapClient;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test class for LdapClient.
  *
  * @since  1.0
  */
-class LdapClientTest extends \PHPUnit_Framework_TestCase
+class LdapClientTest extends TestCase
 {
 	/**
 	 * @var    LdapClient
