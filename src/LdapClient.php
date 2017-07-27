@@ -514,7 +514,7 @@ class LdapClient
 	 *
 	 * @return  string
 	 *
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.2.0
 	 */
 	public function escape($value, $ignore = '', $flags = 0)
 	{
