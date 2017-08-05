@@ -506,6 +506,22 @@ class LdapClient
 	}
 
 	/**
+	 * Escape a string
+	 *
+	 * @param   string   $value   The subject string
+	 * @param   string   $ignore  Characters to ignore when escaping.
+	 * @param   integer  $flags   The context the escaped string will be used in LDAP_ESCAPE_FILTER or LDAP_ESCAPE_DN
+	 *
+	 * @return  string
+	 *
+	 * @since   1.2.0
+	 */
+	public function escape($value, $ignore = '', $flags = 0)
+	{
+		return @ldap_escape($value, $ignore, $flags);
+	}
+
+	/**
 	 * Returns the error message
 	 *
 	 * @return  string   error message
