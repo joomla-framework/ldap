@@ -96,6 +96,14 @@ class LdapClient
 	private $dn = null;
 
 	/**
+	 * Flag tracking whether the connection has been bound
+	 *
+	 * @var    boolean
+	 * @since  __DEPLOY_VERSION__
+	 */
+	private $isBound = false;
+
+	/**
 	 * Constructor
 	 *
 	 * @param   object  $configObj  An object of configuration variables
@@ -191,6 +199,8 @@ class LdapClient
 	{
 		if ($this->resource && is_resource($this->resource))
 		{
+			$this->unbind();
+
 			@ldap_close($this->resource);
 		}
 
@@ -238,13 +248,17 @@ class LdapClient
 	/**
 	 * Anonymously binds to LDAP directory
 	 *
-	 * @return  array
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
 	public function anonymous_bind()
 	{
-		return @ldap_bind($this->resource);
+		$bound = @ldap_bind($this->resource);
+
+		$this->isBound = $bound;
+
+		return $bound;
 	}
 
 	/**
@@ -271,8 +285,25 @@ class LdapClient
 		}
 
 		$this->setDn($username, $nosub);
-
+var_dump($this->getDn(), $password);
 		return @ldap_bind($this->resource, $this->getDn(), $password);
+	}
+
+	/**
+	 * Unbinds from the LDAP directory
+	 *
+	 * @return  boolean
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public function unbind()
+	{
+		if ($this->isBound && $this->resource && is_resource($this->resource))
+		{
+			return @ldap_unbind($this->resource);
+		}
+
+		return true;
 	}
 
 	/**
@@ -282,7 +313,7 @@ class LdapClient
 	 *
 	 * @return  array  Search results
 	 *
-	 * @since  1.0
+	 * @since   1.0
 	 */
 	public function simple_search($search)
 	{
