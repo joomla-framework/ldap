@@ -271,9 +271,8 @@ class LdapClient
 		}
 
 		$this->setDn($username, $nosub);
-		$bindResult = @ldap_bind($this->resource, $this->getDn(), $password);
 
-		return $bindResult;
+		return @ldap_bind($this->resource, $this->getDn(), $password);
 	}
 
 	/**

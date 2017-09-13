@@ -54,16 +54,18 @@ class LdapClientTest extends TestCase
 	/**
 	 * @covers  Joomla\Ldap\Ldap::connect
 	 */
-	public function testConnect()
+	public function testTheConnectionIsOpened()
 	{
 		$this->assertTrue($this->object->connect());
 	}
 
 	/**
+	 * @testdox  The DN is set when there is no user DN
+	 *
 	 * @covers  Joomla\Ldap\Ldap::setDn
 	 * @uses    Joomla\Ldap\Ldap::getDn
 	 */
-	public function testSetDnWithNoUserDn()
+	public function testTheDnIsSetWhenThereIsNoUserDn()
 	{
 		$dn = 'cn=admin,dc=joomla,dc=org';
 
@@ -73,53 +75,57 @@ class LdapClientTest extends TestCase
 	}
 
 	/**
+	 * @testdox  The DN is set when there is a user DN
+	 *
 	 * @covers  Joomla\Ldap\Ldap::setDn
 	 * @uses    Joomla\Ldap\Ldap::getDn
 	 */
-	public function testSetDnWithUserDn()
+	public function testTheDnIsSetWhenThereIsAUserDn()
 	{
-		$this->object->setDn('uid=[username],cn=admin,dc=joomla,dc=org');
+		$this->object->users_dn = 'uid=[username],cn=admin,dc=joomla,dc=org';
+
 		$this->object->setDn('admin');
 
 		$this->assertSame('uid=admin,cn=admin,dc=joomla,dc=org', $this->object->getDn());
 	}
 
 	/**
+	 * @testdox  The DN is retrieved
+	 *
 	 * @covers  Joomla\Ldap\Ldap::getDn
 	 */
-	public function testGetDn()
+	public function testTheDnIsRetrieved()
 	{
 		$this->assertNull($this->object->getDn());
 	}
 
 	/**
-	 * Test...
+	 * @testdox  The connection is bound to the LDAP server anonymously
 	 *
-	 * @todo Implement testAnonymous_bind().
-	 *
-	 * @return void
+	 * @covers  Joomla\Ldap\Ldap::anonymous_bind
 	 */
-	public function testAnonymous_bind()
+	public function testAnonymousBinding()
+	{
+		$this->markTestSkipped('Not connecting correctly on Travis CI environment');
+	}
+
+	/**
+	 * @testdox  The connection is bound to the LDAP server
+	 *
+	 * @covers  Joomla\Ldap\Ldap::bind
+	 * @uses    Joomla\Ldap\Ldap::connect
+	 * @uses    Joomla\Ldap\Ldap::setDn
+	 */
+	public function testBinding()
 	{
 		if (!$this->object->connect())
 		{
 			$this->markTestSkipped('Could not connect to LDAP server');
 		}
 
-		var_dump($this->object->anonymous_bind());
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete('This test has not been implemented yet.');
-	}
+		$this->object->setDn('cn=admin,dc=joomla,dc=org');
 
-	/**
-	 * Test...
-	 *
-	 * @todo Implement testBind().
-	 *
-	 * @return void
-	 */
-	public function testBind()
-	{
+		var_dump($this->object->bind(null, 'joomla'));
 		// Remove the following lines when you implement this test.
 		$this->markTestIncomplete('This test has not been implemented yet.');
 	}
