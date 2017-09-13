@@ -131,9 +131,7 @@ class LdapClientTest extends TestCase
 			$this->markTestSkipped('Could not connect to LDAP server');
 		}
 
-		$this->object->setDn('cn=admin,dc=joomla,dc=org');
-
-		$this->assertTrue($this->object->bind(null, 'joomla'), 'LDAP connection failed: ' . $this->object->getErrorMsg());
+		$this->assertTrue($this->object->bind('cn=admin,dc=joomla,dc=org', 'joomla'), 'LDAP connection failed: ' . $this->object->getErrorMsg());
 	}
 
 	/**
