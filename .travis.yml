@@ -39,7 +39,8 @@ matrix:
 before_install:
   - mkdir /tmp/slapd
   - slapd -f .travis/ldap/conf/slapd.conf -h ldap://localhost:3389 &
-  - ldapadd -h localhost:3389 -D cn=admin,dc=joomla,dc=org -w joomla -f .travis/ldap/data/base.ldif && ldapadd -h localhost:3389 -D cn=admin,dc=joomla,dc=org -w joomla -f .travis/ldap/data/fixtures.ldif
+  - ldapadd -h localhost:3389 -D cn=admin,dc=joomla,dc=org -w joomla -f .travis/ldap/data/base.ldif
+  - ldapadd -h localhost:3389 -D cn=admin,dc=joomla,dc=org -w joomla -f .travis/ldap/data/fixtures.ldif
 
 before_script:
   # The Trusty build is compiled with LDAP support
