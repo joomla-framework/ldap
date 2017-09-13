@@ -197,7 +197,7 @@ class LdapClient
 	 */
 	public function close()
 	{
-		if ($this->resource && is_resource($this->resource))
+		if ($this->isConnected())
 		{
 			$this->unbind();
 
@@ -345,6 +345,11 @@ class LdapClient
 	public function search(array $filters, $dnoverride = null, array $attributes = array())
 	{
 		$result = array();
+
+		if (!$this->isBound || !$this->isConnected())
+		{
+			return $result;
+		}
 
 		if ($dnoverride)
 		{
@@ -578,6 +583,18 @@ class LdapClient
 	public function getErrorMsg()
 	{
 		return @ldap_error($this->resource);
+	}
+
+	/**
+	 * Check if the connection is established
+	 *
+	 * @return  boolean
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public function isConnected()
+	{
+		return $this->resource && is_resource($this->resource);
 	}
 
 	/**

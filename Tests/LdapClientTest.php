@@ -137,14 +137,29 @@ class LdapClientTest extends TestCase
 	}
 
 	/**
-	 * Test...
+	 * @testdox  A simple search is performed
 	 *
-	 * @todo Implement testSimple_search().
-	 *
-	 * @return void
+	 * @covers  Joomla\Ldap\Ldap::simple_search
+	 * @uses    Joomla\Ldap\Ldap::bind
+	 * @uses    Joomla\Ldap\Ldap::connect
+	 * @uses    Joomla\Ldap\Ldap::search
+	 * @uses    Joomla\Ldap\Ldap::setDn
 	 */
-	public function testSimple_search()
+	public function testSimpleSearch()
 	{
+		if (!$this->object->connect())
+		{
+			$this->markTestSkipped('Could not connect to LDAP server');
+		}
+
+		$this->object->users_dn = 'cn=[username],dc=joomla,dc=org';
+
+		if (!$this->object->bind('admin', 'joomla'))
+		{
+			$this->markTestSkipped('Could not bind to LDAP server');
+		}
+
+		var_dump($this->object->simple_search('objectclass=person'));
 		// Remove the following lines when you implement this test.
 		$this->markTestIncomplete('This test has not been implemented yet.');
 	}
