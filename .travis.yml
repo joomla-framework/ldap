@@ -38,10 +38,10 @@ matrix:
 
 before_script:
     # The Trusty build is compiled with LDAP support
-  - if [[ $TRAVIS_PHP_VERSION = 5.3]]; then phpenv config-add .travis/phpenv/ldap.ini; fi
+  - if [[ $TRAVIS_PHP_VERSION = 5.3 ]]; then phpenv config-add .travis/phpenv/ldap.ini; fi
   - composer self-update
   - composer update $COMPOSER_FLAGS
 
 script:
   - vendor/bin/phpunit
-  - if [ "$RUN_PHPCS" == "yes" ]; then vendor/bin/phpcs -p --report=full --extensions=php --standard=.travis/phpcs/Joomla/ruleset.xml src/; fi;
+  - if [[ $RUN_PHPCS == "yes" ]]; then vendor/bin/phpcs -p --report=full --extensions=php --standard=.travis/phpcs/Joomla/ruleset.xml src/; fi;
