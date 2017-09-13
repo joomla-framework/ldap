@@ -106,7 +106,12 @@ class LdapClientTest extends TestCase
 	 */
 	public function testAnonymousBinding()
 	{
-		$this->markTestSkipped('Not connecting correctly on Travis CI environment');
+		if (!$this->object->connect())
+		{
+			$this->markTestSkipped('Could not connect to LDAP server');
+		}
+
+		$this->assertTrue($this->object->anonymous_bind(), 'LDAP connection failed: ' . $this->object->getErrorMsg());
 	}
 
 	/**
@@ -125,9 +130,7 @@ class LdapClientTest extends TestCase
 
 		$this->object->setDn('cn=admin,dc=joomla,dc=org');
 
-		var_dump($this->object->bind(null, 'joomla'));
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		$this->assertTrue($this->object->bind(null, 'joomla'), 'LDAP connection failed: ' . $this->object->getErrorMsg());
 	}
 
 	/**
