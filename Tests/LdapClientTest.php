@@ -7,17 +7,16 @@
 namespace Joomla\Ldap\Tests;
 
 use Joomla\Ldap\LdapClient;
+use Joomla\Registry\Registry;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Test class for LdapClient.
- *
- * @since  1.0
+ * Test class for Joomla\Ldap\LdapClient.
  */
 class LdapClientTest extends TestCase
 {
 	/**
-	 * @var    LdapClient
+	 * @var  LdapClient
 	 */
 	protected $object;
 
@@ -31,20 +30,20 @@ class LdapClientTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->object = new LdapClient;
+		$data = array(
+			'host' => getenv('LDAP_HOST') ?: '127.0.0.1',
+			'port' => getenv('LDAP_PORT') ?: '3389',
+		);
+
+		$this->object = new LdapClient(new Registry($data));
 	}
 
 	/**
-	 * Test...
-	 *
-	 * @todo Implement testConnect().
-	 *
-	 * @return void
+	 * @covers  Joomla\Ldap\Ldap::connect
 	 */
 	public function testConnect()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		$this->assertTrue($this->object->connect());
 	}
 
 	/**
