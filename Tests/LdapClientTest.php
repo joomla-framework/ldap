@@ -160,22 +160,60 @@ class LdapClientTest extends TestCase
 			$this->markTestSkipped('Could not bind to LDAP server');
 		}
 
-		var_dump($this->object->simple_search('objectclass=person'));
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		$this->assertCount(1, $this->object->simple_search('objectclass=person'), 'The search did not return the expected number of results');
 	}
 
 	/**
-	 * Test...
+	 * @testdox  A search is performed without an override of the base DN
 	 *
-	 * @todo Implement testSearch().
-	 *
-	 * @return void
+	 * @covers  Joomla\Ldap\Ldap::simple_search
+	 * @uses    Joomla\Ldap\Ldap::bind
+	 * @uses    Joomla\Ldap\Ldap::connect
+	 * @uses    Joomla\Ldap\Ldap::search
+	 * @uses    Joomla\Ldap\Ldap::setDn
 	 */
-	public function testSearch()
+	public function testSearchWithoutDnOverride()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		if (!$this->object->connect())
+		{
+			$this->markTestSkipped('Could not connect to LDAP server');
+		}
+
+		$this->object->base_dn  = 'dc=joomla,dc=org';
+		$this->object->users_dn = 'cn=[username],dc=joomla,dc=org';
+
+		if (!$this->object->bind('admin', 'joomla'))
+		{
+			$this->markTestSkipped('Could not bind to LDAP server');
+		}
+
+		$this->assertCount(1, $this->object->search(array('(objectclass=person)')), 'The search did not return the expected number of results');
+	}
+
+	/**
+	 * @testdox  A search is performed with an override of the base DN
+	 *
+	 * @covers  Joomla\Ldap\Ldap::simple_search
+	 * @uses    Joomla\Ldap\Ldap::bind
+	 * @uses    Joomla\Ldap\Ldap::connect
+	 * @uses    Joomla\Ldap\Ldap::search
+	 * @uses    Joomla\Ldap\Ldap::setDn
+	 */
+	public function testSearchWithDnOverride()
+	{
+		if (!$this->object->connect())
+		{
+			$this->markTestSkipped('Could not connect to LDAP server');
+		}
+
+		$this->object->users_dn = 'cn=[username],dc=joomla,dc=org';
+
+		if (!$this->object->bind('admin', 'joomla'))
+		{
+			$this->markTestSkipped('Could not bind to LDAP server');
+		}
+
+		$this->assertCount(1, $this->object->search(array('(objectclass=person)'), 'dc=joomla,dc=org'), 'The search did not return the expected number of results');
 	}
 
 	/**
