@@ -3,6 +3,7 @@
 	<php>
 		<env name="LDAP_HOST" value="127.0.0.1"/>
 		<env name="LDAP_PORT" value="3389"/>
+		<env name="LDAP_V3" value="1"/>
 	</php>
 
 	<testsuites>

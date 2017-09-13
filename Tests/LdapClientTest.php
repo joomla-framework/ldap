@@ -30,10 +30,12 @@ class LdapClientTest extends TestCase
 	{
 		parent::setUp();
 
+		$v3 = getenv('LDAP_V3');
+
 		$data = array(
 			'host'       => getenv('LDAP_HOST') ?: '127.0.0.1',
 			'port'       => getenv('LDAP_PORT') ?: '3389',
-			'use_ldapV3' => (bool) getenv('LDAP_V3') ?: true,
+			'use_ldapV3' => $v3 === false ? true : (bool) $v3,
 		);
 
 		$this->object = new LdapClient(new Registry($data));
