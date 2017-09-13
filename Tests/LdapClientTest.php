@@ -85,11 +85,11 @@ class LdapClientTest extends TestCase
 	 */
 	public function testTheDnIsSetWhenThereIsAUserDn()
 	{
-		$this->object->users_dn = 'uid=[username],cn=admin,dc=joomla,dc=org';
+		$this->object->users_dn = 'cn=[username],dc=joomla,dc=org';
 
 		$this->object->setDn('admin');
 
-		$this->assertSame('uid=admin,cn=admin,dc=joomla,dc=org', $this->object->getDn());
+		$this->assertSame('cn=admin,dc=joomla,dc=org', $this->object->getDn());
 	}
 
 	/**
@@ -131,7 +131,9 @@ class LdapClientTest extends TestCase
 			$this->markTestSkipped('Could not connect to LDAP server');
 		}
 
-		$this->assertTrue($this->object->bind('cn=admin,dc=joomla,dc=org', 'joomla'), 'LDAP connection failed: ' . $this->object->getErrorMsg());
+		$this->object->users_dn = 'cn=[username],dc=joomla,dc=org';
+
+		$this->assertTrue($this->object->bind('admin', 'joomla'), 'LDAP connection failed: ' . $this->object->getErrorMsg());
 	}
 
 	/**
