@@ -24,7 +24,7 @@ class LdapClientTest extends TestCase
 	 * Sets up the fixture, for example, opens a network connection.
 	 * This method is called before a test is executed.
 	 *
-	 * @return void
+	 * @return  void
 	 */
 	protected function setUp()
 	{
@@ -39,6 +39,19 @@ class LdapClientTest extends TestCase
 	}
 
 	/**
+	 * Tears down the fixture, for example, close a network connection.
+	 * This method is called after a test is executed.
+	 *
+	 * @return  void
+	 */
+	protected function tearDown()
+	{
+		unset($this->object);
+
+		parent::tearDown();
+	}
+
+	/**
 	 * @covers  Joomla\Ldap\Ldap::connect
 	 */
 	public function testConnect()
@@ -47,42 +60,36 @@ class LdapClientTest extends TestCase
 	}
 
 	/**
-	 * Test...
-	 *
-	 * @todo Implement testClose().
-	 *
-	 * @return void
+	 * @covers  Joomla\Ldap\Ldap::setDn
+	 * @uses    Joomla\Ldap\Ldap::getDn
 	 */
-	public function testClose()
+	public function testSetDnWithNoUserDn()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		$dn = 'cn=admin,dc=joomla,dc=org';
+
+		$this->object->setDn($dn);
+
+		$this->assertSame($dn, $this->object->getDn());
 	}
 
 	/**
-	 * Test...
-	 *
-	 * @todo Implement testSetDn().
-	 *
-	 * @return void
+	 * @covers  Joomla\Ldap\Ldap::setDn
+	 * @uses    Joomla\Ldap\Ldap::getDn
 	 */
-	public function testSetDn()
+	public function testSetDnWithUserDn()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		$this->object->setDn('uid=[username],cn=admin,dc=joomla,dc=org');
+		$this->object->setDn('admin');
+
+		$this->assertSame('uid=admin,cn=admin,dc=joomla,dc=org', $this->object->getDn());
 	}
 
 	/**
-	 * Test...
-	 *
-	 * @todo Implement testGetDn().
-	 *
-	 * @return void
+	 * @covers  Joomla\Ldap\Ldap::getDn
 	 */
 	public function testGetDn()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		$this->assertNull($this->object->getDn());
 	}
 
 	/**
@@ -94,6 +101,12 @@ class LdapClientTest extends TestCase
 	 */
 	public function testAnonymous_bind()
 	{
+		if (!$this->object->connect())
+		{
+			$this->markTestSkipped('Could not connect to LDAP server');
+		}
+
+		var_dump($this->object->anonymous_bind());
 		// Remove the following lines when you implement this test.
 		$this->markTestIncomplete('This test has not been implemented yet.');
 	}

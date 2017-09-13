@@ -124,6 +124,16 @@ class LdapClient
 	}
 
 	/**
+	 * Class destructor.
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public function __destruct()
+	{
+		$this->close();
+	}
+
+	/**
 	 * Connect to server
 	 *
 	 * @return  boolean  True if successful
@@ -179,7 +189,12 @@ class LdapClient
 	 */
 	public function close()
 	{
-		@ ldap_close($this->resource);
+		if ($this->resource && is_resource($this->resource))
+		{
+			@ldap_close($this->resource);
+		}
+
+		$this->resource = null;
 	}
 
 	/**
@@ -229,9 +244,7 @@ class LdapClient
 	 */
 	public function anonymous_bind()
 	{
-		$bindResult = @ldap_bind($this->resource);
-
-		return $bindResult;
+		return @ldap_bind($this->resource);
 	}
 
 	/**
