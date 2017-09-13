@@ -152,6 +152,7 @@ class LdapClientTest extends TestCase
 			$this->markTestSkipped('Could not connect to LDAP server');
 		}
 
+		$this->object->base_dn  = 'dc=joomla,dc=org';
 		$this->object->users_dn = 'cn=[username],dc=joomla,dc=org';
 
 		if (!$this->object->bind('admin', 'joomla'))
