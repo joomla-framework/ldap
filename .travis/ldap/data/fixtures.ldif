@@ -1,0 +1,24 @@
+dn: cn=Michael Babker,dc=joomla,dc=org
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: Michael Babker
+sn: mbabker
+mail: michael.babker@joomla.org
+ou: People
+ou: Maintainers
+givenName: Michael Babker
+description: Framework Maintainer, CMS Release Lead, Production Department Coordinator
+
+dn: ou=Components,dc=joomla,dc=org
+objectclass: organizationalunit
+ou: Components
+
+dn: ou=Ldap,ou=Components,dc=joomla,dc=org
+objectclass: organizationalunit
+ou: Ldap
+
+dn: ou=Ldap scoping,ou=Ldap,ou=Components,dc=joomla,dc=org
+objectclass: organizationalunit
+ou: Ldap scoping
