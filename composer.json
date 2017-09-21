@@ -16,7 +16,7 @@
     },
     "suggest": {
         "symfony/polyfill-php56": "If using PHP 5.5 or earlier to use ldap_escape() function"
-    }
+    },
     "autoload": {
         "psr-4": {
             "Joomla\\Ldap\\": "src/"
