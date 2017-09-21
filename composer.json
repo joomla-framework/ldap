@@ -7,13 +7,16 @@
     "license": "GPL-2.0+",
     "require": {
         "php": "^5.3.10|~7.0",
-        "ext-ldap": "*",
-        "symfony/polyfill-php56": "~1.0"
+        "ext-ldap": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8.35|^5.4.3|~6.0",
-        "squizlabs/php_codesniffer": "1.*"
+        "squizlabs/php_codesniffer": "1.*",
+        "symfony/polyfill-php56": "~1.0"
     },
+    "suggest": {
+        "symfony/polyfill-php56": "If using PHP 5.5 or earlier to use ldap_escape() function"
+    }
     "autoload": {
         "psr-4": {
             "Joomla\\Ldap\\": "src/"
