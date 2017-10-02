@@ -547,6 +547,11 @@ class LdapClient
 	 */
 	public function create($dn, array $entries)
 	{
+		if (!$this->isBound || !$this->isConnected())
+		{
+			return false;
+		}
+
 		return @ldap_add($this->resource, $dn, $entries);
 	}
 

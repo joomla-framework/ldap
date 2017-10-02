@@ -416,16 +416,65 @@ class LdapClientTest extends TestCase
 	}
 
 	/**
-	 * Test...
+	 * @testdox  An entry is created on the server based for the given DN
 	 *
-	 * @todo Implement testCreate().
-	 *
-	 * @return void
+	 * @covers  Joomla\Ldap\Ldap::create
+	 * @uses    Joomla\Ldap\Ldap::bind
+	 * @uses    Joomla\Ldap\Ldap::connect
+	 * @uses    Joomla\Ldap\Ldap::delete
+	 * @uses    Joomla\Ldap\Ldap::setDn
 	 */
 	public function testCreate()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		if (!$this->object->connect())
+		{
+			$this->markTestSkipped('Could not connect to LDAP server');
+		}
+
+		$this->object->base_dn  = 'dc=joomla,dc=org';
+		$this->object->users_dn = 'cn=[username],dc=joomla,dc=org';
+
+		if (!$this->object->bind('admin', 'joomla'))
+		{
+			$this->markTestSkipped('Could not bind to LDAP server');
+		}
+
+		$this->assertTrue(
+			$this->object->create(
+				'cn=George Wilson,dc=joomla,dc=org',
+				array(
+					'objectClass' => array(
+						'inetOrgPerson',
+						'organizationalPerson',
+						'person',
+						'top',
+					),
+					'cn'          => array(
+						'George Wilson',
+					),
+					'sn'          => array(
+						'wilsonge',
+					),
+					'mail'        => array(
+						'george.wilson@joomla.org',
+					),
+					'ou'          => array(
+						'People',
+						'Maintainers',
+					),
+					'givenName'   => array(
+						'George Wilson',
+					),
+					'description' => array(
+						'Framework Team Lead',
+					),
+				)
+			),
+			'The entry was not created'
+		);
+
+		// Reset
+		$this->object->delete('cn=George Wilson,dc=joomla,dc=org');
 	}
 
 	/**
