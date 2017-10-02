@@ -237,46 +237,95 @@ class LdapClientTest extends TestCase
 			$this->markTestSkipped('Could not bind to LDAP server');
 		}
 
-		var_dump($this->object->replace('cn=Michael Babker,dc=joomla,dc=org', array('mail' => 'michael@joomla.org')));
+		$this->assertTrue($this->object->replace('cn=Michael Babker,dc=joomla,dc=org', array('mail' => 'michael@joomla.org')), 'The attribute was not replaced');
+
+		// Reset
+		$this->object->replace('cn=Michael Babker,dc=joomla,dc=org', array('mail' => 'michael.babker@joomla.org'));
 	}
 
 	/**
-	 * Test...
+	 * @testdox  An attribute is modified for the given user DN
 	 *
-	 * @todo Implement testModify().
-	 *
-	 * @return void
+	 * @covers  Joomla\Ldap\Ldap::modify
+	 * @uses    Joomla\Ldap\Ldap::bind
+	 * @uses    Joomla\Ldap\Ldap::connect
+	 * @uses    Joomla\Ldap\Ldap::setDn
 	 */
 	public function testModify()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		if (!$this->object->connect())
+		{
+			$this->markTestSkipped('Could not connect to LDAP server');
+		}
+
+		$this->object->base_dn  = 'dc=joomla,dc=org';
+		$this->object->users_dn = 'cn=[username],dc=joomla,dc=org';
+
+		if (!$this->object->bind('admin', 'joomla'))
+		{
+			$this->markTestSkipped('Could not bind to LDAP server');
+		}
+
+		$this->assertTrue($this->object->modify('cn=Michael Babker,dc=joomla,dc=org', array('mail' => 'michael@joomla.org')), 'The attribute was not modified');
+
+		// Reset
+		$this->object->modify('cn=Michael Babker,dc=joomla,dc=org', array('mail' => 'michael.babker@joomla.org'));
 	}
 
 	/**
-	 * Test...
+	 * @testdox  An attribute is removed from the given user DN
 	 *
-	 * @todo Implement testRemove().
-	 *
-	 * @return void
+	 * @covers  Joomla\Ldap\Ldap::remove
+	 * @uses    Joomla\Ldap\Ldap::add
+	 * @uses    Joomla\Ldap\Ldap::bind
+	 * @uses    Joomla\Ldap\Ldap::connect
+	 * @uses    Joomla\Ldap\Ldap::setDn
 	 */
 	public function testRemove()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		if (!$this->object->connect())
+		{
+			$this->markTestSkipped('Could not connect to LDAP server');
+		}
+
+		$this->object->base_dn  = 'dc=joomla,dc=org';
+		$this->object->users_dn = 'cn=[username],dc=joomla,dc=org';
+
+		if (!$this->object->bind('admin', 'joomla'))
+		{
+			$this->markTestSkipped('Could not bind to LDAP server');
+		}
+
+		$this->assertTrue($this->object->remove('cn=Michael Babker,dc=joomla,dc=org', array('mail' => 'michael@joomla.org')), 'The attribute was not removed');
+
+		// Reset
+		$this->object->add('cn=Michael Babker,dc=joomla,dc=org', array('mail' => 'michael.babker@joomla.org'));
 	}
 
 	/**
-	 * Test...
+	 * @testdox  An attribute is compared for a given value to the user DN
 	 *
-	 * @todo Implement testCompare().
-	 *
-	 * @return void
+	 * @covers  Joomla\Ldap\Ldap::compare
+	 * @uses    Joomla\Ldap\Ldap::bind
+	 * @uses    Joomla\Ldap\Ldap::connect
+	 * @uses    Joomla\Ldap\Ldap::setDn
 	 */
 	public function testCompare()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		if (!$this->object->connect())
+		{
+			$this->markTestSkipped('Could not connect to LDAP server');
+		}
+
+		$this->object->base_dn  = 'dc=joomla,dc=org';
+		$this->object->users_dn = 'cn=[username],dc=joomla,dc=org';
+
+		if (!$this->object->bind('admin', 'joomla'))
+		{
+			$this->markTestSkipped('Could not bind to LDAP server');
+		}
+
+		$this->assertTrue($this->object->compare('cn=Michael Babker,dc=joomla,dc=org', 'mail', 'michael@joomla.org'), 'The attribute value is not in the expected state');
 	}
 
 	/**

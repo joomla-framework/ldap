@@ -419,6 +419,11 @@ class LdapClient
 	 */
 	public function replace($dn, $attribute)
 	{
+		if (!$this->isBound || !$this->isConnected())
+		{
+			return false;
+		}
+
 		return @ldap_mod_replace($this->resource, $dn, $attribute);
 	}
 
@@ -434,6 +439,11 @@ class LdapClient
 	 */
 	public function modify($dn, $attribute)
 	{
+		if (!$this->isBound || !$this->isConnected())
+		{
+			return false;
+		}
+
 		return @ldap_modify($this->resource, $dn, $attribute);
 	}
 
@@ -449,9 +459,12 @@ class LdapClient
 	 */
 	public function remove($dn, $attribute)
 	{
-		$resource = $this->resource;
+		if (!$this->isBound || !$this->isConnected())
+		{
+			return false;
+		}
 
-		return @ldap_mod_del($resource, $dn, $attribute);
+		return @ldap_mod_del($this->resource, $dn, $attribute);
 	}
 
 	/**
@@ -467,6 +480,11 @@ class LdapClient
 	 */
 	public function compare($dn, $attribute, $value)
 	{
+		if (!$this->isBound || !$this->isConnected())
+		{
+			return false;
+		}
+
 		return @ldap_compare($this->resource, $dn, $attribute, $value);
 	}
 
