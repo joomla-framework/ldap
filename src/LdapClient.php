@@ -507,15 +507,13 @@ class LdapClient
 		$base = substr($dn, strpos($dn, ',') + 1);
 		$cn = substr($dn, 0, strpos($dn, ','));
 		$result = @ldap_read($this->resource, $base, $cn);
-var_dump($result);
-		if ($result)
+
+		if ($result === false)
 		{
-			return @ldap_get_entries($this->resource, $result);
+			return false;
 		}
-		else
-		{
-			return $result;
-		}
+
+		return @ldap_get_entries($this->resource, $result);
 	}
 
 	/**
