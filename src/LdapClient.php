@@ -506,6 +506,7 @@ class LdapClient
 
 		$base = substr($dn, strpos($dn, ',') + 1);
 		$cn = substr($dn, 0, strpos($dn, ','));
+		var_dump($base, $cn);
 		$result = @ldap_read($this->resource, $base, $cn);
 
 		if ($result === false)
