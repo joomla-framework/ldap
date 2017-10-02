@@ -499,10 +499,15 @@ class LdapClient
 	 */
 	public function read($dn)
 	{
+		if (!$this->isBound || !$this->isConnected())
+		{
+			return false;
+		}
+
 		$base = substr($dn, strpos($dn, ',') + 1);
 		$cn = substr($dn, 0, strpos($dn, ','));
 		$result = @ldap_read($this->resource, $base, $cn);
-
+var_dump($result);
 		if ($result)
 		{
 			return @ldap_get_entries($this->resource, $result);
