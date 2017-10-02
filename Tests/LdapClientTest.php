@@ -357,16 +357,62 @@ class LdapClientTest extends TestCase
 	}
 
 	/**
-	 * Test...
+	 * @testdox  An entry is removed from the server based on the given DN
 	 *
-	 * @todo Implement testDelete().
-	 *
-	 * @return void
+	 * @covers  Joomla\Ldap\Ldap::delete
+	 * @uses    Joomla\Ldap\Ldap::bind
+	 * @uses    Joomla\Ldap\Ldap::connect
+	 * @uses    Joomla\Ldap\Ldap::create
+	 * @uses    Joomla\Ldap\Ldap::setDn
 	 */
 	public function testDelete()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		if (!$this->object->connect())
+		{
+			$this->markTestSkipped('Could not connect to LDAP server');
+		}
+
+		$this->object->base_dn  = 'dc=joomla,dc=org';
+		$this->object->users_dn = 'cn=[username],dc=joomla,dc=org';
+
+		if (!$this->object->bind('admin', 'joomla'))
+		{
+			$this->markTestSkipped('Could not bind to LDAP server');
+		}
+
+		$this->assertTrue($this->object->delete('cn=Michael Babker,dc=joomla,dc=org'), 'The entry was not deleted');
+
+		// Reset
+		$this->object->create(
+			'cn=Michael Babker,dc=joomla,dc=org',
+			array(
+				'objectClass' => array(
+					'inetOrgPerson',
+					'organizationalPerson',
+					'person',
+					'top',
+				),
+				'cn'          => array(
+					'Michael Babker',
+				),
+				'sn'          => array(
+					'mbabker',
+				),
+				'mail'        => array(
+					'michael.babker@joomla.org',
+				),
+				'ou'          => array(
+					'People',
+					'Maintainers',
+				),
+				'givenName'   => array(
+					'Michael Babker',
+				),
+				'description' => array(
+					'Framework Maintainer, CMS Release Lead, Production Department Coordinator',
+				),
+			)
+		);
 	}
 
 	/**

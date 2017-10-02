@@ -527,6 +527,11 @@ class LdapClient
 	 */
 	public function delete($dn)
 	{
+		if (!$this->isBound || !$this->isConnected())
+		{
+			return false;
+		}
+
 		return @ldap_delete($this->resource, $dn);
 	}
 
