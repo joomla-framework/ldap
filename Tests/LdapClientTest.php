@@ -166,10 +166,9 @@ class LdapClientTest extends TestCase
 	/**
 	 * @testdox  A search is performed without an override of the base DN
 	 *
-	 * @covers  Joomla\Ldap\Ldap::simple_search
+	 * @covers  Joomla\Ldap\Ldap::search
 	 * @uses    Joomla\Ldap\Ldap::bind
 	 * @uses    Joomla\Ldap\Ldap::connect
-	 * @uses    Joomla\Ldap\Ldap::search
 	 * @uses    Joomla\Ldap\Ldap::setDn
 	 */
 	public function testSearchWithoutDnOverride()
@@ -193,10 +192,9 @@ class LdapClientTest extends TestCase
 	/**
 	 * @testdox  A search is performed with an override of the base DN
 	 *
-	 * @covers  Joomla\Ldap\Ldap::simple_search
+	 * @covers  Joomla\Ldap\Ldap::search
 	 * @uses    Joomla\Ldap\Ldap::bind
 	 * @uses    Joomla\Ldap\Ldap::connect
-	 * @uses    Joomla\Ldap\Ldap::search
 	 * @uses    Joomla\Ldap\Ldap::setDn
 	 */
 	public function testSearchWithDnOverride()
@@ -217,16 +215,29 @@ class LdapClientTest extends TestCase
 	}
 
 	/**
-	 * Test...
+	 * @testdox  An attribute is replaced for the given user DN
 	 *
-	 * @todo Implement testReplace().
-	 *
-	 * @return void
+	 * @covers  Joomla\Ldap\Ldap::replace
+	 * @uses    Joomla\Ldap\Ldap::bind
+	 * @uses    Joomla\Ldap\Ldap::connect
+	 * @uses    Joomla\Ldap\Ldap::setDn
 	 */
 	public function testReplace()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		if (!$this->object->connect())
+		{
+			$this->markTestSkipped('Could not connect to LDAP server');
+		}
+
+		$this->object->base_dn  = 'dc=joomla,dc=org';
+		$this->object->users_dn = 'cn=[username],dc=joomla,dc=org';
+
+		if (!$this->object->bind('admin', 'joomla'))
+		{
+			$this->markTestSkipped('Could not bind to LDAP server');
+		}
+
+		var_dump($this->object->replace('cn=Michael Babker,dc=joomla,dc=org', array('mail' => 'michael@joomla.org')));
 	}
 
 	/**
