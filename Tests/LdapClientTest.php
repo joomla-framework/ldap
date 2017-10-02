@@ -296,7 +296,7 @@ class LdapClientTest extends TestCase
 			$this->markTestSkipped('Could not bind to LDAP server');
 		}
 
-		$this->assertTrue($this->object->remove('cn=Michael Babker,dc=joomla,dc=org', array('mail' => 'michael@joomla.org')), 'The attribute was not removed');
+		$this->assertTrue($this->object->remove('cn=Michael Babker,dc=joomla,dc=org', array('mail' => '')), 'The attribute was not removed');
 
 		// Reset
 		$this->object->add('cn=Michael Babker,dc=joomla,dc=org', array('mail' => 'michael.babker@joomla.org'));
@@ -325,7 +325,7 @@ class LdapClientTest extends TestCase
 			$this->markTestSkipped('Could not bind to LDAP server');
 		}
 
-		$this->assertTrue($this->object->compare('cn=Michael Babker,dc=joomla,dc=org', 'mail', 'michael@joomla.org'), 'The attribute value is not in the expected state');
+		$this->assertTrue($this->object->compare('cn=Michael Babker,dc=joomla,dc=org', 'mail', 'michael.babker@joomla.org'), 'The attribute value is not in the expected state');
 	}
 
 	/**
