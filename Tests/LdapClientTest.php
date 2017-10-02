@@ -351,7 +351,9 @@ class LdapClientTest extends TestCase
 			$this->markTestSkipped('Could not bind to LDAP server');
 		}
 
-		var_dump($this->object->read('(objectclass=*),dc=joomla,dc=org'));
+		$result = $this->object->read('(objectclass=person),cn=Michael Babker,dc=joomla,dc=org');
+
+		$this->assertSame(1, $result['count'], 'The expected number of entries were not read');
 	}
 
 	/**
