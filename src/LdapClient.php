@@ -617,12 +617,17 @@ class LdapClient
 	/**
 	 * Returns the error message
 	 *
-	 * @return  string   error message
+	 * @return  string
 	 *
 	 * @since   1.0
 	 */
 	public function getErrorMsg()
 	{
+		if (!$this->isBound || !$this->isConnected())
+		{
+			return '';
+		}
+
 		return @ldap_error($this->resource);
 	}
 
@@ -720,7 +725,9 @@ class LdapClient
 			'TCP6',
 			'Reserved (12)',
 			'URL',
-			'Count');
+			'Count'
+		);
+
 		$len = strlen($networkaddress);
 
 		if ($len > 0)
@@ -757,7 +764,7 @@ class LdapClient
 	 * @param   string  $password  Clear text password to encrypt
 	 * @param   string  $type      Type of password hash, either md5 or SHA
 	 *
-	 * @return  string   Encrypted password
+	 * @return  string
 	 *
 	 * @since   1.0
 	 */
