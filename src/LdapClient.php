@@ -270,11 +270,17 @@ class LdapClient
 	 */
 	public function anonymous_bind()
 	{
-		$bound = @ldap_bind($this->resource);
+		if (!$this->isConnected())
+		{
+			if (!$this->connect())
+			{
+				return false;
+			}
+		}
 
-		$this->isBound = $bound;
+		$this->isBound = @ldap_bind($this->resource);
 
-		return $bound;
+		return $this->isBound;
 	}
 
 	/**
@@ -290,6 +296,14 @@ class LdapClient
 	 */
 	public function bind($username = null, $password = null, $nosub = 0)
 	{
+		if (!$this->isConnected())
+		{
+			if (!$this->connect())
+			{
+				return false;
+			}
+		}
+
 		if (is_null($username))
 		{
 			$username = $this->username;
@@ -302,11 +316,9 @@ class LdapClient
 
 		$this->setDn($username, $nosub);
 
-		$bound = @ldap_bind($this->resource, $this->getDn(), $password);
+		$this->isBound = @ldap_bind($this->resource, $this->getDn(), $password);
 
-		$this->isBound = $bound;
-
-		return $bound;
+		return $this->isBound;
 	}
 
 	/**
