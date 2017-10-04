@@ -478,29 +478,62 @@ class LdapClientTest extends TestCase
 	}
 
 	/**
-	 * Test...
+	 * @testdox  An attribute is added to the given user DN
 	 *
-	 * @todo Implement testAdd().
-	 *
-	 * @return void
+	 * @covers  Joomla\Ldap\Ldap::add
+	 * @uses    Joomla\Ldap\Ldap::remove
+	 * @uses    Joomla\Ldap\Ldap::bind
+	 * @uses    Joomla\Ldap\Ldap::connect
+	 * @uses    Joomla\Ldap\Ldap::setDn
 	 */
 	public function testAdd()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		if (!$this->object->connect())
+		{
+			$this->markTestSkipped('Could not connect to LDAP server');
+		}
+
+		$this->object->base_dn  = 'dc=joomla,dc=org';
+		$this->object->users_dn = 'cn=[username],dc=joomla,dc=org';
+
+		if (!$this->object->bind('admin', 'joomla'))
+		{
+			$this->markTestSkipped('Could not bind to LDAP server');
+		}
+
+		$this->assertTrue($this->object->add('cn=Michael Babker,dc=joomla,dc=org', array('mail' => 'michael.babker@gmail.com')), 'The attribute was not added');
+
+		// Reset
+		$this->object->remove('cn=Michael Babker,dc=joomla,dc=org', array('mail' => 'michael.babker@gmail.com'));
 	}
 
 	/**
-	 * Test...
+	 * @testdox  An entry is renamed on the server based for the given DN
 	 *
-	 * @todo Implement testRename().
-	 *
-	 * @return void
+	 * @covers  Joomla\Ldap\Ldap::rename
+	 * @uses    Joomla\Ldap\Ldap::bind
+	 * @uses    Joomla\Ldap\Ldap::connect
+	 * @uses    Joomla\Ldap\Ldap::setDn
 	 */
 	public function testRename()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		if (!$this->object->connect())
+		{
+			$this->markTestSkipped('Could not connect to LDAP server');
+		}
+
+		$this->object->base_dn  = 'dc=joomla,dc=org';
+		$this->object->users_dn = 'cn=[username],dc=joomla,dc=org';
+
+		if (!$this->object->bind('admin', 'joomla'))
+		{
+			$this->markTestSkipped('Could not bind to LDAP server');
+		}
+
+		$this->assertTrue($this->object->rename('cn=Michael Babker,dc=joomla,dc=org', 'cn=Michael', null, true), 'The entry was not renamed');
+
+		// Reset
+		$this->object->rename('cn=Michael', 'cn=Michael Babker,dc=joomla,dc=org', null, true);
 	}
 
 	/**

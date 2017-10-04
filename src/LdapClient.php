@@ -568,6 +568,11 @@ class LdapClient
 	 */
 	public function add($dn, array $entry)
 	{
+		if (!$this->isBound || !$this->isConnected())
+		{
+			return false;
+		}
+
 		return @ldap_mod_add($this->resource, $dn, $entry);
 	}
 
@@ -585,6 +590,11 @@ class LdapClient
 	 */
 	public function rename($dn, $newdn, $newparent, $deleteolddn)
 	{
+		if (!$this->isBound || !$this->isConnected())
+		{
+			return false;
+		}
+
 		return @ldap_rename($this->resource, $dn, $newdn, $newparent, $deleteolddn);
 	}
 
