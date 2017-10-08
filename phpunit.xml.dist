@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="vendor/autoload.php" colors="false">
+	<php>
+		<env name="LDAP_HOST" value="127.0.0.1"/>
+		<env name="LDAP_PORT" value="3389"/>
+		<env name="LDAP_V3" value="1"/>
+	</php>
+
 	<testsuites>
 		<testsuite name="Unit">
 			<directory>Tests</directory>

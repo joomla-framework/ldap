@@ -36,8 +36,16 @@ matrix:
     - php: 7.2
     - php: nightly
 
+before_install:
+  - mkdir /tmp/slapd
+  - slapd -f .travis/ldap/conf/slapd.conf -h ldap://localhost:3389 &
+  # This sleep is required to ensure the slapd process is running before loading the data in
+  - sleep 3
+  - ldapadd -h localhost:3389 -D cn=admin,dc=joomla,dc=org -w joomla -f .travis/ldap/data/base.ldif
+  - ldapadd -h localhost:3389 -D cn=admin,dc=joomla,dc=org -w joomla -f .travis/ldap/data/fixtures.ldif
+
 before_script:
-    # The Trusty build is compiled with LDAP support
+  # The Trusty build is compiled with LDAP support
   - if [[ $TRAVIS_PHP_VERSION = 5.3 ]]; then phpenv config-add .travis/phpenv/ldap.ini; fi
   - composer self-update
   - composer update $COMPOSER_FLAGS
