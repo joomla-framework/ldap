@@ -179,24 +179,24 @@ class LdapClient
 			return false;
 		}
 
-		$this->resource = @ ldap_connect($this->host, $this->port);
+		$this->resource = ldap_connect($this->host, $this->port);
 
 		if (!$this->resource)
 		{
 			return false;
 		}
 
-		if ($this->use_ldapV3 && !@ldap_set_option($this->resource, LDAP_OPT_PROTOCOL_VERSION, 3))
+		if ($this->use_ldapV3 && !ldap_set_option($this->resource, LDAP_OPT_PROTOCOL_VERSION, 3))
 		{
 			return false;
 		}
 
-		if (!@ldap_set_option($this->resource, LDAP_OPT_REFERRALS, (int) $this->no_referrals))
+		if (!ldap_set_option($this->resource, LDAP_OPT_REFERRALS, (int) $this->no_referrals))
 		{
 			return false;
 		}
 
-		if ($this->negotiate_tls && !@ldap_start_tls($this->resource))
+		if ($this->negotiate_tls && !ldap_start_tls($this->resource))
 		{
 			return false;
 		}
@@ -217,7 +217,7 @@ class LdapClient
 		{
 			$this->unbind();
 
-			@ldap_close($this->resource);
+			ldap_close($this->resource);
 		}
 
 		$this->resource = null;
@@ -278,7 +278,7 @@ class LdapClient
 			}
 		}
 
-		$this->isBound = @ldap_bind($this->resource);
+		$this->isBound = ldap_bind($this->resource);
 
 		return $this->isBound;
 	}
@@ -316,7 +316,7 @@ class LdapClient
 
 		$this->setDn($username, $nosub);
 
-		$this->isBound = @ldap_bind($this->resource, $this->getDn(), $password);
+		$this->isBound = ldap_bind($this->resource, $this->getDn(), $password);
 
 		return $this->isBound;
 	}
@@ -332,7 +332,7 @@ class LdapClient
 	{
 		if ($this->isBound && $this->resource && is_resource($this->resource))
 		{
-			return @ldap_unbind($this->resource);
+			return ldap_unbind($this->resource);
 		}
 
 		return true;
@@ -390,9 +390,9 @@ class LdapClient
 
 		foreach ($filters as $search_filter)
 		{
-			$search_result = @ldap_search($this->resource, $dn, $search_filter, $attributes);
+			$search_result = ldap_search($this->resource, $dn, $search_filter, $attributes);
 
-			if ($search_result && ($count = @ldap_count_entries($this->resource, $search_result)) > 0)
+			if ($search_result && ($count = ldap_count_entries($this->resource, $search_result)) > 0)
 			{
 				for ($i = 0; $i < $count; $i++)
 				{
@@ -400,15 +400,15 @@ class LdapClient
 
 					if (!$i)
 					{
-						$firstentry = @ldap_first_entry($this->resource, $search_result);
+						$firstentry = ldap_first_entry($this->resource, $search_result);
 					}
 					else
 					{
-						$firstentry = @ldap_next_entry($this->resource, $firstentry);
+						$firstentry = ldap_next_entry($this->resource, $firstentry);
 					}
 
 					// Load user-specified attributes
-					$result_array = @ldap_get_attributes($this->resource, $firstentry);
+					$result_array = ldap_get_attributes($this->resource, $firstentry);
 
 					// LDAP returns an array of arrays, fit this into attributes result array
 					foreach ($result_array as $ki => $ai)
@@ -425,7 +425,7 @@ class LdapClient
 						}
 					}
 
-					$result[$i]['dn'] = @ldap_get_dn($this->resource, $firstentry);
+					$result[$i]['dn'] = ldap_get_dn($this->resource, $firstentry);
 				}
 			}
 		}
@@ -450,7 +450,7 @@ class LdapClient
 			return false;
 		}
 
-		return @ldap_mod_replace($this->resource, $dn, $attribute);
+		return ldap_mod_replace($this->resource, $dn, $attribute);
 	}
 
 	/**
@@ -470,7 +470,7 @@ class LdapClient
 			return false;
 		}
 
-		return @ldap_modify($this->resource, $dn, $attribute);
+		return ldap_modify($this->resource, $dn, $attribute);
 	}
 
 	/**
@@ -490,7 +490,7 @@ class LdapClient
 			return false;
 		}
 
-		return @ldap_mod_del($this->resource, $dn, $attribute);
+		return ldap_mod_del($this->resource, $dn, $attribute);
 	}
 
 	/**
@@ -511,7 +511,7 @@ class LdapClient
 			return false;
 		}
 
-		return @ldap_compare($this->resource, $dn, $attribute, $value);
+		return ldap_compare($this->resource, $dn, $attribute, $value);
 	}
 
 	/**
@@ -532,14 +532,14 @@ class LdapClient
 
 		$base = substr($dn, strpos($dn, ',') + 1);
 		$cn = substr($dn, 0, strpos($dn, ','));
-		$result = @ldap_read($this->resource, $base, $cn);
+		$result = ldap_read($this->resource, $base, $cn);
 
 		if ($result === false)
 		{
 			return false;
 		}
 
-		return @ldap_get_entries($this->resource, $result);
+		return ldap_get_entries($this->resource, $result);
 	}
 
 	/**
@@ -558,7 +558,7 @@ class LdapClient
 			return false;
 		}
 
-		return @ldap_delete($this->resource, $dn);
+		return ldap_delete($this->resource, $dn);
 	}
 
 	/**
@@ -578,7 +578,7 @@ class LdapClient
 			return false;
 		}
 
-		return @ldap_add($this->resource, $dn, $entries);
+		return ldap_add($this->resource, $dn, $entries);
 	}
 
 	/**
@@ -598,7 +598,7 @@ class LdapClient
 			return false;
 		}
 
-		return @ldap_mod_add($this->resource, $dn, $entry);
+		return ldap_mod_add($this->resource, $dn, $entry);
 	}
 
 	/**
@@ -620,7 +620,7 @@ class LdapClient
 			return false;
 		}
 
-		return @ldap_rename($this->resource, $dn, $newdn, $newparent, $deleteolddn);
+		return ldap_rename($this->resource, $dn, $newdn, $newparent, $deleteolddn);
 	}
 
 	/**
@@ -636,7 +636,7 @@ class LdapClient
 	 */
 	public function escape($value, $ignore = '', $flags = 0)
 	{
-		return @ldap_escape($value, $ignore, $flags);
+		return ldap_escape($value, $ignore, $flags);
 	}
 
 	/**
@@ -653,7 +653,7 @@ class LdapClient
 			return '';
 		}
 
-		return @ldap_error($this->resource);
+		return ldap_error($this->resource);
 	}
 
 	/**
