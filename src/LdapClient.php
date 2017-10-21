@@ -216,8 +216,6 @@ class LdapClient
 		if ($this->isConnected())
 		{
 			$this->unbind();
-
-			ldap_close($this->resource);
 		}
 
 		$this->resource = null;
