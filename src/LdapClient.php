@@ -123,7 +123,7 @@ class LdapClient
 	 * Flag tracking whether the connection has been bound
 	 *
 	 * @var    boolean
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	private $isBound = false;
 
@@ -158,7 +158,7 @@ class LdapClient
 	/**
 	 * Class destructor.
 	 *
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.3.0
 	 */
 	public function __destruct()
 	{
@@ -324,7 +324,7 @@ class LdapClient
 	 *
 	 * @return  boolean
 	 *
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.3.0
 	 */
 	public function unbind()
 	{
@@ -659,7 +659,7 @@ class LdapClient
 	 *
 	 * @return  boolean
 	 *
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.3.0
 	 */
 	public function isConnected()
 	{
