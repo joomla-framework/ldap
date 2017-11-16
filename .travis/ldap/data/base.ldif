@@ -1,0 +1,4 @@
+dn: dc=joomla,dc=org
+objectClass: dcObject
+objectClass: organizationalUnit
+ou: Organization

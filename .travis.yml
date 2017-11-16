@@ -1,7 +1,6 @@
 language: php
 sudo: false
-# Unlike other packages, we continue to use Precise globally due to issues with the LDAP extension on Trusty
-dist: precise
+dist: trusty
 
 addons:
   apt_packages:
@@ -31,11 +30,18 @@ matrix:
     - php: 7.2
     - php: nightly
 
+before_install:
+  - mkdir /tmp/slapd
+  - slapd -f .travis/ldap/conf/slapd.conf -h ldap://localhost:3389 &
+  # This sleep is required to ensure the slapd process is running before loading the data in
+  - sleep 3
+  - ldapadd -h localhost:3389 -D cn=admin,dc=joomla,dc=org -w joomla -f .travis/ldap/data/base.ldif
+  - ldapadd -h localhost:3389 -D cn=admin,dc=joomla,dc=org -w joomla -f .travis/ldap/data/fixtures.ldif
+
 before_script:
-  - phpenv config-add .travis/phpenv/ldap.ini
   - composer self-update
   - composer update $COMPOSER_FLAGS
 
 script:
   - vendor/bin/phpunit
-  - if [ "$RUN_PHPCS" == "yes" ]; then vendor/bin/phpcs -p --report=full --extensions=php --standard=.travis/phpcs/Joomla/ruleset.xml src/; fi;
+  - if [[ $RUN_PHPCS == "yes" ]]; then vendor/bin/phpcs -p --report=full --extensions=php --standard=.travis/phpcs/Joomla/ruleset.xml src/; fi;
