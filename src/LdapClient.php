@@ -11,7 +11,8 @@ namespace Joomla\Ldap;
 /**
  * LDAP client class
  *
- * @since  1.0
+ * @since       1.0
+ * @deprecated  The joomla/ldap package is deprecated
  */
 class LdapClient
 {
