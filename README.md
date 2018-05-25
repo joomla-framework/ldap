@@ -1,5 +1,8 @@
 # The Ldap Package [![Build Status](https://travis-ci.org/joomla-framework/ldap.png?branch=master)](https://travis-ci.org/joomla-framework/ldap)
 
+## Deprecated
+
+The `joomla/ldap` package is deprecated with no future updates planned.
 
 ## Installation via Composer
 
