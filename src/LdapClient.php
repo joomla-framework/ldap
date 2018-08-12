@@ -414,7 +414,7 @@ class LdapClient
 					{
 						if (is_array($ai))
 						{
-							$subcount = $ai['count'];
+							$subcount        = $ai['count'];
 							$result[$i][$ki] = array();
 
 							for ($k = 0; $k < $subcount; $k++)
@@ -529,8 +529,8 @@ class LdapClient
 			return false;
 		}
 
-		$base = substr($dn, strpos($dn, ',') + 1);
-		$cn = substr($dn, 0, strpos($dn, ','));
+		$base   = substr($dn, strpos($dn, ',') + 1);
+		$cn     = substr($dn, 0, strpos($dn, ','));
 		$result = ldap_read($this->resource, $base, $cn);
 
 		if ($result === false)
@@ -678,7 +678,7 @@ class LdapClient
 	 */
 	public static function ipToNetAddress($ip)
 	{
-		$parts = explode('.', $ip);
+		$parts   = explode('.', $ip);
 		$address = '1#';
 
 		foreach ($parts as $int)
@@ -722,7 +722,7 @@ class LdapClient
 	 */
 	public static function ldapNetAddr($networkaddress)
 	{
-		$addr = "";
+		$addr     = "";
 		$addrtype = (int) substr($networkaddress, 0, 1);
 
 		// Throw away bytes 0 and 1 which should be the addrtype and the "#" separator
@@ -749,7 +749,7 @@ class LdapClient
 			'TCP6',
 			'Reserved (12)',
 			'URL',
-			'Count'
+			'Count',
 		);
 
 		$len = strlen($networkaddress);
