@@ -303,12 +303,12 @@ class LdapClient
 			}
 		}
 
-		if (is_null($username))
+		if ($username === null)
 		{
 			$username = $this->username;
 		}
 
-		if (is_null($password))
+		if ($password === null)
 		{
 			$password = $this->password;
 		}
