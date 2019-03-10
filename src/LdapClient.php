@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework LDAP Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2019 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -92,7 +92,7 @@ class LdapClient
 	 * Ignore TLS Certificate (encrypted communications)
 	 *
 	 * @var    boolean
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.5.0
 	 */
 	public $ignore_reqcert_tls;
 
@@ -100,7 +100,7 @@ class LdapClient
 	 * Enable LDAP debug
 	 *
 	 * @var    boolean
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.5.0
 	 */
 	public $ldap_debug;
 
