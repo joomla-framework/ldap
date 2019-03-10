@@ -94,7 +94,7 @@ class LdapClient
 	 * @var    boolean
 	 * @since  __DEPLOY_VERSION__
 	 */
-	public $ignore_reqcert_tls = null;
+	public $ignore_reqcert_tls;
 
 	/**
 	 * Enable LDAP debug (encrypted communications)
@@ -102,7 +102,7 @@ class LdapClient
 	 * @var    boolean
 	 * @since  __DEPLOY_VERSION__
 	 */
-	public $ldap_debug = null;
+	public $ldap_debug;
 
 	/**
 	 * Username to connect to server
