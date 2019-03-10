@@ -97,7 +97,7 @@ class LdapClient
 	public $ignore_reqcert_tls;
 
 	/**
-	 * Enable LDAP debug (encrypted communications)
+	 * Enable LDAP debug
 	 *
 	 * @var    boolean
 	 * @since  __DEPLOY_VERSION__
