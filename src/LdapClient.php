@@ -203,7 +203,7 @@ class LdapClient
 
 		if ($this->ldap_debug)
 		{
-			ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
+			ldap_set_option(null, LDAP_OPT_DEBUG_LEVEL, 7);
 		}
 
 		$this->resource = ldap_connect($this->host, $this->port);
