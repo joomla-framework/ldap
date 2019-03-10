@@ -102,7 +102,7 @@ class LdapClient
 	 * @var    boolean
 	 * @since  __DEPLOY_VERSION__
 	 */
-	 public $ldap_debug = null;
+	public $ldap_debug = null;
 
 	/**
 	 * Username to connect to server
