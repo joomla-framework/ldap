@@ -89,6 +89,22 @@ class LdapClient
 	public $negotiate_tls;
 
 	/**
+	 * Ignore TLS Certificate (encrypted communications)
+	 *
+	 * @var    boolean
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public $ignore_reqcert_tls;
+
+	/**
+	 * Enable LDAP debug
+	 *
+	 * @var    boolean
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public $ldap_debug;
+
+	/**
 	 * Username to connect to server
 	 *
 	 * @var    string
@@ -178,6 +194,16 @@ class LdapClient
 		if ($this->host == '')
 		{
 			return false;
+		}
+
+		if ($this->ignore_reqcert_tls)
+		{
+			putenv('LDAPTLS_REQCERT=never');
+		}
+
+		if ($this->ldap_debug)
+		{
+			ldap_set_option(null, LDAP_OPT_DEBUG_LEVEL, 7);
 		}
 
 		$this->resource = ldap_connect($this->host, $this->port);
